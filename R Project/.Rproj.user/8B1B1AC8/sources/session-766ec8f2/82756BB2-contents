@@ -158,3 +158,14 @@ compute_marginal_effect <- function(model, data, variable_of_interest, num_boots
        )
 }
 
+
+
+categorize_stem <- function(data) {
+  # Create a new column 'STEM' with values 'STEM' or 'NO STEM'
+  data <- data %>%
+    mutate(STEM = ifelse(grepl("ENGINEERING|MATHEMATICS|HEALTH SCIENCES|MEDICINE", AREA_CONOCIMIENTO, ignore.case = TRUE), 'STEM', 'NO STEM'))
+  
+  return(data)
+}
+
+
