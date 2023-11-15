@@ -32,11 +32,94 @@ table_save = function(result,caption, file_name ) {
   
 }
 
+ 
 
 
 
+plot_coefficients = function (data, estimate_point = '' ,sd_error = '', x_continuous = '' , TITULO= '', polynom = 3) {
+  out = data
+  
+  horizon = NULL
+  color_scale = "#00A1D5"
+  out$term = out[[x_continuous]]
+  out$estimate = out[[estimate_point]] 
+  mynamestheme <- ggplot2::theme(
+    plot.title = element_text(family = "Helvetica", face = "bold", size = (15), hjust = 0.5, vjust = 0.5),
+    legend.title = element_text(colour = "steelblue", face = "bold.italic", family = "Helvetica"),
+    legend.text = element_text(face = "italic", colour = "steelblue4", family = "Helvetica"),
+    axis.title = element_text(family = "Helvetica", face = "bold", size = (12), colour = "steelblue4"),
+    axis.text = element_text(family = "Courier", face = "bold", colour = "cornflowerblue", size = (12)),
+    legend.position = "bottom" )
+  
+  
+  out$ci_lower = out[[estimate_point]] - 1.96 * out[[sd_error]]
+  out$ci_upper = out[[estimate_point]] + 1.96 * out[[sd_error]]
+  out$ci_lower_90 = out[[estimate_point]] - 1.645 * out[[sd_error]]
+  out$ci_upper_90 = out[[estimate_point]] + 1.645 * out[[sd_error]]
+  
+  # Intervalo de confianza del 99%
+  out$ci_lower_99 = out[[estimate_point]] - 2.576 * out[[sd_error]]
+  out$ci_upper_99 = out[[estimate_point]] + 2.576 * out[[sd_error]]
+  
+  position = ggplot2::position_dodge(width = 0.05 )
+  
+  
+  y_lims = c(min(out$ci_lower), max(out$ci_upper)) * 1.05
+  x_lims = c(0, 1)
+  y_label_ = ("Point Estimate and 95% Confidence Interval ") # \n  Likelihood of a female student choosing a career 
+  x_label_ = "Proportion of males within a class group"
+  Plot = ggplot2::ggplot(data = out, ggplot2::aes(x = .data$term, 
+                                                  y = .data$estimate,  
+                                                  ymin = .data$ci_lower , 
+                                                  ymax = .data$ci_upper)) +  theme_light()  +
+    ggplot2::geom_point(position = position, size = 0.5) + 
+    # ggplot2::geom_errorbar(position = position,   width = 0.01) + 
+    ggplot2::geom_vline(xintercept = -1, linetype = "dashed") + 
+    ggplot2::geom_hline(yintercept = 0, linetype = "dashed") + 
+    ggplot2::ggtitle(TITULO)+ ggplot2::scale_x_continuous(limits = x_lims, 
+                                                          breaks = 
+                                                            seq( round(min(out$term)*0.95, 2) , 
+                                                                 round(max(out$term)*1.05, 2 ), 
+                                                                 by = round(max(out$term)/10  ,  2)) ) +
+    # ggplot2::geom_tile(colour="white" ) +
+    ggplot2::theme(  plot.title = element_text(hjust = 0.5, vjust = 0.5),
+                     axis.line.x = element_line(color="steelblue4", size = 0.05),
+                     axis.line.y = element_line(color="steelblue4", size = 0.5)) +
+      ggplot2::labs(y = y_label_, 
+                  x = x_label_ , color = "Estimator" ) + 
+      ggplot2::scale_color_manual(values = color_scale) 
+    P =  Plot +   mynamestheme +
+      geom_ribbon(
+        aes(ymin = .data$ci_lower_90, ymax = .data$ci_upper_90),
+        position = position,
+        fill = "lightgray",
+        alpha = 0.45,
+        show.legend = FALSE 
+      )    +
+      geom_ribbon(
+        aes(ymin = .data$ci_lower, ymax = .data$ci_upper),
+        position = position,
+        fill = "gray",
+        alpha = 0.45,
+        show.legend = FALSE 
+      )    +
+      geom_ribbon(
+        aes(ymin = .data$ci_upper_99, ymax = .data$ci_upper_99),
+        position = position,
+        fill = "darkgray",
+        alpha = 0.45,
+        show.legend = FALSE 
+      )  +  
+      geom_line(position = position, color = "steelblue4", size = 1, alpha = 0.7,
+                show.legend = FALSE)
+  
+   
+  # 
+  return(P)
+}
 
-plot_coefficients = function (data, estimate_point = '' ,sd_error = '', x_continuous = '' , TITULO= '') {
+
+plot_coefficients_smooth = function (data, estimate_point = '' ,sd_error = '', x_continuous = '' , TITULO= '', polynom = 3) {
   out = data
   
   horizon = NULL
@@ -79,14 +162,20 @@ plot_coefficients = function (data, estimate_point = '' ,sd_error = '', x_contin
     ggplot2::theme(  plot.title = element_text(hjust = 0.5, vjust = 0.5),
                      axis.line.x = element_line(color="steelblue4", size = 0.05),
                      axis.line.y = element_line(color="steelblue4", size = 0.5)) +
-     
     ggplot2::labs(y = y_label_, 
-                  x = x_label_ , color = "Estimator" ) +  ggplot2::scale_color_manual(values = color_scale) 
-  P =  Plot +   geom_smooth(method = "lm",formula = y ~ x + poly(x, 2), se = F, color = "blue") +
-    mynamestheme  
-  print(P  )
+                  x = x_label_ , color = "Estimator" ) + 
+    ggplot2::scale_color_manual(values = color_scale) 
+  P =  Plot +  geom_smooth(method = "lm", formula = y ~ poly(x, polynom), se = T, color = "steelblue4", fill = "gray") 
+  # +
+  # geom_ribbon(
+  #   aes(ymin = .data$ci_lower, ymax = .data$ci_upper),
+  #   position = position,
+  #   fill = "gray",
+  #   alpha = 0.5
+  # ) 
+  # 
+  return(P)
 }
-
 
 
 convert_outcome <- function(outcome) {
@@ -98,8 +187,10 @@ convert_outcome <- function(outcome) {
     'Social Sciences and Humanities',
     'Agronomy, Veterinary and related Careers',
     'Education Sciences',
-    'Health Sciences',
-    'No Studies'
+    'Health Sciences (except medicine)',
+    'No Studies',
+    'Law',
+    'Medicine'
   )
   outcomes <- c(
     'ECONOMICS_BUSINESS_RELATED',
@@ -110,7 +201,9 @@ convert_outcome <- function(outcome) {
     'AGRONOMY_VETERINARY_RELATED',
     'EDUCATION_SCIENCES',
     'HEALTH_SCIENCES',
-    'NO_STUDIES'
+    'NO_STUDIES',
+    'LAW',
+    'MEDICINE'
   )
   
   if (outcome %in% outcomes) {
