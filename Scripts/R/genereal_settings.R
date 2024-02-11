@@ -9,6 +9,11 @@ if (Sys.info()["nodename"] == "CLOUD37") {
   data_dir <- paste0(General_path , "Data/")
   graphs_dir <-  paste0(General_path , "Graph/") 
   tables_dir <- paste0(General_path , "Tables/")  
+} else if (Sys.info()["nodename"] ==  "Jaimes-MacBook-Pro.local" ){
+  General_path = "~/Library/CloudStorage/OneDrive-PontificiaUniversidadJaveriana/01_research/third_paper_phd" 
+  data_dir <- paste0(General_path , "Data/")
+  graphs_dir <-  paste0(General_path , "Graph/") 
+  tables_dir <- paste0(General_path , "Tables/")   
 }
 
 
@@ -20,7 +25,7 @@ options(scipen=999)
 setwd(General_path)
 
 
-source("Scripts/R/apis.R", echo=TRUE)
+# source("Scripts/R/apis.R", echo=TRUE)
 
 
 if (1==1) { 

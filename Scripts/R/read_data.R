@@ -1,4 +1,5 @@
 options(scipen=999)
+# STEP1 = 'AIzaSyCED_ZuXEFGGX0R3rx1d1nHH2ki8S-LxEc'
 # bq_auth(token = STEP1)
 # project_id <- "ph-jabri"
 # dataset_id <- "04_gender_career_choices"
@@ -8,7 +9,7 @@ options(scipen=999)
 #   paste0(  project_id, '.' ,  dataset_id   , '.' ,table_id  )
 #    ),
 #   n_max  = Inf )
-# 
+# # 
 # data$NO_STUDIES = ifelse( is.na(data$SEXO_BIOLOGICO) ==T , 1, 0 )
 # arrow::write_parquet(data , 'Data/correlations.parquet')
 # gc()
