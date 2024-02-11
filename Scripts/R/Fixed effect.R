@@ -2,9 +2,9 @@
 # 
 ###############################################################################
 
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/genereal_settings.R", echo=TRUE)
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/read_data.R", echo=TRUE)
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/functions.R", echo=TRUE)
+source("Scripts/R/genereal_settings.R", echo=TRUE)
+source("./Scripts/R/read_data.R", echo=TRUE)
+source("./Scripts/R/functions.R", echo=TRUE)
 outcomes = c('ECONOMICS_BUSINESS_RELATED' ,
              'ENG_ARCH_RELATED',
              'FINE_ARTS',

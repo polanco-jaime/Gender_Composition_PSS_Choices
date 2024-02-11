@@ -1,5 +1,5 @@
 options(scipen=999)
-# STEP1 = 'AIzaSyCED_ZuXEFGGX0R3rx1d1nHH2ki8S-LxEc'
+# 
 # bq_auth(token = STEP1)
 # project_id <- "ph-jabri"
 # dataset_id <- "04_gender_career_choices"
