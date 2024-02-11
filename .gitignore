@@ -4,5 +4,5 @@
 .Ruserdata
 *.parquet
 *.PARQUET
-*.Rproject
+*.Rproj
 
