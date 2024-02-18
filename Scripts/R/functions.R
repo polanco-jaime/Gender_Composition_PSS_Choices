@@ -260,5 +260,139 @@ categorize_stem <- function(data) {
   
   return(data)
 }
+#################
+#
+#################
+# Define a function to estimate the optimal bandwidth based on logistic regression
+estimate_optimal_bandwidth_logit <- function(data, outcome, covariates, group_var, range_start, range_end) {
+  
+  # Define the logistic regression formula
+  formula <- paste0("(", outcome, ") ~ ", paste(covariates, collapse = "+"), 
+                    " | ", group_var)
+  
+  # Print the current estimation range
+  print(paste0("The current estimation is from: ", range_start, ", to: ", range_end))
+  
+  # Fit the logistic regression model
+  model <- fixest::feglm(data = data, family = 'binomial', as.formula(formula))
+  
+  # Implement your method to estimate the optimal bandwidth
+  # Here, we assume a simple approach of choosing a default value
+  # Modify this section to include your estimation method
+  
+  # Default bandwidth value for demonstration
+  h_default <- 0.1
+  
+  return(h_default)
+}
 
+# Example usage
+# Set your data, outcome variable, covariates, group variable, and range
+# Replace these placeholders with your actual data and variables
+# data <- subsample
+# Define a function to estimate the optimal bandwidth based on Binary Cross-Entropy (BCE)
+estimate_optimal_bandwidth <- function(Y, X, bandwidth_type = "BCE") {
+  
+  # Function to calculate the BCE loss
+  bce_loss <- function(m, Y) {
+    -mean(Y * log(m) + (1 - Y) * log(1 - m))
+  }
+  
+  # Function to estimate the regression function m(X)
+  estimate_m <- function(X, bandwidth) {
+    # Implement your regression model here
+    # This function should return estimated probabilities m(X) for each X_i
+    # based on the bandwidth specified
+    # Example: Use local polynomial regression, kernel density estimation, etc.
+    return(m_estimate)
+  }
+  
+  # Estimate the regression function m(X)
+  m_estimate <- estimate_m(X, bandwidth_type)
+  
+  # Calculate the BCE loss
+  bce <- bce_loss(m_estimate, Y)
+  
+  # Display the BCE loss
+  cat("BCE Loss:", bce, "\n")
+  
+  # Implement your method to estimate the optimal bandwidth
+  # Here, we assume a simple approach of choosing a default value
+  # Modify this section to include your estimation method
+  
+  # Default bandwidth value for demonstration
+  h_default <- 0.1
+  
+  return(h_default)
+}
+ 
 
+# Define a function to estimate binary cross-entropy
+estimate_binary_cross_entropy <- function(data, outcome, covariates, group_var) {
+  
+  # Define the logistic regression formula
+  formula <- paste0("(", outcome, ") ~ ", paste(covariates, collapse = "+"), 
+                    " | ", group_var)
+  
+  # Fit the logistic regression model
+  model <- fixest::feglm(data = data, family = 'binomial', as.formula(formula))
+  
+  # Extract predicted probabilities
+  predicted_probs <- predict(model, type = "response")
+  
+  # Calculate binary cross-entropy
+  bce <- ifelse(data[[outcome]] == 1, -log(predicted_probs), -log(1 - predicted_probs))
+  
+  # Compute mean binary cross-entropy
+  mean_bce <- mean(bce)
+  
+  return(mean_bce)
+}
+
+# Example usage
+# Set your data, outcome variable, covariates, and group variable
+# Replace these placeholders with your actual data and variables
+data <- subsample
+outcome <- "NO_STUDIES" 
+covariates <- c("genero", "EDAD", "tot_students_school_group")
+group_var <- "fe_group"
+
+# Estimate binary cross-entropy
+binary_cross_entropy <- estimate_binary_cross_entropy(data, outcome, covariates, group_var)
+cat("Estimated Binary Cross-Entropy:", binary_cross_entropy, "\n")
+
+################
+start_point = 0.001
+end_point = 0.999
+bw_by  =3
+sequence <- seq(start_point, end_point, by = (end_point-start_point)/bw_by )
+# Loop over the sequence
+for (i in 1:(length(sequence)-1)) {
+  # Define the lower and upper bounds for the subsample
+  lower_bound <- sequence[i]
+  upper_bound <- sequence[i+1]
+  
+  # Subset the data based on the bounds
+  subsample <- data[data$frac_males_in_the_group >= lower_bound & 
+                      data$frac_males_in_the_group < upper_bound, ]
+  
+  # Print some information about the current subsample
+  cat("Subsample", i, ":", nrow(subsample), "observations\n") 
+}
+length( unique(subsample$codigo_dane_sede) )
+# Define the logistic regression formula
+formula <- paste0("(", outcome, ") ~ ", paste(covariates, collapse = "+"), 
+                  " | ", group_var)
+
+# Fit the logistic regression model
+model <- fixest::feglm(data = data, family = 'binomial', as.formula(formula))
+
+# Extract predicted probabilities
+predicted_probs <- predict(model, type = "response")
+
+# Calculate binary cross-entropy
+bce <- ifelse(data[[outcome]] == 1, -log(predicted_probs), -log(1 - predicted_probs))
+
+# Compute mean binary cross-entropy
+mean_bce <- mean(bce)
+mean_bce

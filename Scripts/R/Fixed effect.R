@@ -16,33 +16,12 @@ outcomes = c('ECONOMICS_BUSINESS_RELATED' ,
              'NO_STUDIES'
 )
 gc()
-data$fe_group = paste0(data$codigo_dane_sede, ' - ' , data$YEAR_INFO  ) # ,' - ', data$nro_documento
-###############################################
-# Fixed effect by student level
-###############################################
-gc()
+table(data$NO_STUDIES)
 
-data <- data %>%
-  mutate(MEDICINE = ifelse(AREA_CONOCIMIENTO == 'HEALTH SCIENCES' & grepl('MED', NOMBRE_PROGRAMA), 1, 0))
-
-
-
-data$AREA_CONOCIMIENTO = ifelse(data$MEDICINE == 1, 'MEDICINE', data$AREA_CONOCIMIENTO)
-
-data$AREA_CONOCIMIENTO = ifelse( is.na(data$AREA_CONOCIMIENTO)==T, 'NO STUDIES', data$AREA_CONOCIMIENTO)
-
-data$HEALTH_SCIENCES = ifelse(data$MEDICINE == 1, 0, data$HEALTH_SCIENCES)
 
 data$genero <- factor(data$genero, levels = c("M","F"))
 
-outcomes = c(outcomes, 'MEDICINE')
 
-data <- data %>%
-  mutate(LAW = ifelse(AREA_CONOCIMIENTO == 'SOCIAL SCIENCES AND HUMANITIES' & grepl('DERE', NOMBRE_PROGRAMA), 1, 0))
-
-
-outcomes = c(outcomes, 'LAW')
-data$SOCIAL_SCIENCES_HUMANITIES = ifelse(data$LAW == 1, 0, data$SOCIAL_SCIENCES_HUMANITIES)
 
 
 
@@ -134,13 +113,13 @@ for (career in unique(estimated_points$outcome) ) {
                              sd_error = sd_error, x_continuous = x_continuous ,
                              TITULO= TITULO, 3)
   
-  png(paste0(graphs_dir , 'fe_panel_student_gender_composition_wome_in_', career ,"_10p.png"),  width = 1030, height = 598)
+  # png(paste0(graphs_dir , 'fe_panel_student_gender_composition_wome_in_', career ,"_10p.png"),  width = 1030, height = 598)
   print(Plot)
-  dev.off()
+  # dev.off()
   
-  png(paste0(graphs_dir , 'fe_panel_student_gender_composition_wome_in_', career ,"_smooth_10p.png"),  width = 1030, height = 598)
+  # png(paste0(graphs_dir , 'fe_panel_student_gender_composition_wome_in_', career ,"_smooth_10p.png"),  width = 1030, height = 598)
   print(Plot2)
-  dev.off()
+  # dev.off()
   
   gc()
 }
@@ -151,9 +130,9 @@ write.csv(estimated_points, 'Data/estimated_points_fe_panel_student_gender_compo
 # Marginal effect => ME = \beta1 * P*(1-p) 
 ###############################################    ###############################################
 
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/genereal_settings.R", echo=TRUE)
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/read_data.R", echo=TRUE)
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/functions.R", echo=TRUE)
+source("Scripts/R/genereal_settings.R", echo=TRUE)
+source("./Scripts/R/read_data.R", echo=TRUE)
+source("./Scripts/R/functions.R", echo=TRUE)
 outcomes = c('ECONOMICS_BUSINESS_RELATED' ,
              'ENG_ARCH_RELATED',
              'FINE_ARTS',
@@ -309,10 +288,9 @@ gc()
 #
 ###############################################    ###############################################
 
-
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/genereal_settings.R", echo=TRUE)
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/read_data.R", echo=TRUE)
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/functions.R", echo=TRUE)
+source("Scripts/R/genereal_settings.R", echo=TRUE)
+source("./Scripts/R/read_data.R", echo=TRUE)
+source("./Scripts/R/functions.R", echo=TRUE)
 outcomes = c('ECONOMICS_BUSINESS_RELATED' ,
              'ENG_ARCH_RELATED',
              'FINE_ARTS',
@@ -391,9 +369,9 @@ for (outcome in outcomes[1]  ) {
 
 
 
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/genereal_settings.R", echo=TRUE)
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/read_data.R", echo=TRUE)
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/functions.R", echo=TRUE)
+source("Scripts/R/genereal_settings.R", echo=TRUE)
+source("./Scripts/R/read_data.R", echo=TRUE)
+source("./Scripts/R/functions.R", echo=TRUE)
 outcomes = c('ECONOMICS_BUSINESS_RELATED' ,
              'ENG_ARCH_RELATED',
              'FINE_ARTS',
@@ -844,7 +822,17 @@ for (outcome in outcomes[1]  ) {
 
 
 
-
+######################
+outcome <- "NO_STUDIES"
+covariates <- c("genero", "EDAD", "tot_students_school_group")
+group_var <- "fe_group"
+range_start <- 0.001
+range_end <- 0.99
+colnames(data)
+# Estimate optimal bandwidth based on logistic regression
+optimal_bandwidth_logit <- estimate_optimal_bandwidth_logit(data, outcome, covariates, group_var, range_start, range_end)
+cat("Estimated Optimal Bandwidth (Logistic Regression):", optimal_bandwidth_logit, "\n")
+optimal_bandwidth_logit
 
  
  
