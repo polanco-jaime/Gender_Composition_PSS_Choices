@@ -519,9 +519,9 @@ gc()
 # 
 ###############################################################################
 
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/genereal_settings.R", echo=TRUE)
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/read_data.R", echo=TRUE)
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/functions.R", echo=TRUE)
+source("Scripts/R/genereal_settings.R", echo=TRUE)
+source("./Scripts/R/read_data.R", echo=TRUE)
+source("./Scripts/R/functions.R", echo=TRUE)
 outcomes = c('ECONOMICS_BUSINESS_RELATED' ,
              'ENG_ARCH_RELATED',
              'FINE_ARTS',
@@ -620,10 +620,9 @@ write.csv(estimated_points, 'Data/estimated_points_fe_panel_student_gender_compo
 ###############################################    ###############################################
 # Marginal effect => ME = \beta1 * P*(1-p) 
 ###############################################    ###############################################
-
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/genereal_settings.R", echo=TRUE)
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/read_data.R", echo=TRUE)
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/functions.R", echo=TRUE)
+source("Scripts/R/genereal_settings.R", echo=TRUE)
+source("./Scripts/R/read_data.R", echo=TRUE)
+source("./Scripts/R/functions.R", echo=TRUE)
 outcomes = c('ECONOMICS_BUSINESS_RELATED' ,
              'ENG_ARCH_RELATED',
              'FINE_ARTS',
@@ -747,9 +746,9 @@ gc()
 ###############################################    ###############################################
 
 
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/genereal_settings.R", echo=TRUE)
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/read_data.R", echo=TRUE)
-source("C:/Users/USER/Desktop/01-with-the-boys/Scripts/R/functions.R", echo=TRUE)
+source("Scripts/R/genereal_settings.R", echo=TRUE)
+source("./Scripts/R/read_data.R", echo=TRUE)
+source("./Scripts/R/functions.R", echo=TRUE)
 outcomes = c('ECONOMICS_BUSINESS_RELATED' ,
              'ENG_ARCH_RELATED',
              'FINE_ARTS',
@@ -822,17 +821,7 @@ for (outcome in outcomes[1]  ) {
 
 
 
-######################
-outcome <- "NO_STUDIES"
-covariates <- c("genero", "EDAD", "tot_students_school_group")
-group_var <- "fe_group"
-range_start <- 0.001
-range_end <- 0.99
-colnames(data)
-# Estimate optimal bandwidth based on logistic regression
-optimal_bandwidth_logit <- estimate_optimal_bandwidth_logit(data, outcome, covariates, group_var, range_start, range_end)
-cat("Estimated Optimal Bandwidth (Logistic Regression):", optimal_bandwidth_logit, "\n")
-optimal_bandwidth_logit
+
 
  
  
