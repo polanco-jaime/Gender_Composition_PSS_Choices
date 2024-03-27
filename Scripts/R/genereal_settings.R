@@ -10,7 +10,7 @@ if (Sys.info()["nodename"] == "CLOUD37") {
   graphs_dir <-  paste0(General_path , "Graph/") 
   tables_dir <- paste0(General_path , "Tables/")  
 } else if (Sys.info()["nodename"] ==  "Jaimes-MacBook-Pro.local" ){
-  General_path = "~/Library/CloudStorage/OneDrive-PontificiaUniversidadJaveriana/01_research/third_paper_phd" 
+  General_path = "~/Library/CloudStorage/OneDrive-PontificiaUniversidadJaveriana/01_research/third_paper_phd/" 
   data_dir <- paste0(General_path , "Data/")
   graphs_dir <-  paste0(General_path , "Graph/") 
   tables_dir <- paste0(General_path , "Tables/")   
@@ -32,7 +32,8 @@ if (1==1) {
   lista = c('readr','readxl','sqldf','plyr', 
             'did' , 'arrow',  'plyr', 'ggplot2',
             'dplyr','fixest' , 'gargle' , 'stringr'
-            , 'bigrquery' , 'scales', 'fixest' , "margins"
+            , 'bigrquery' , 'scales', 'fixest' , "margins", "jsonlite" , 
+            "xtable"
   )
   for (i in 1:length(lista) ) {
     if(lista[i] %in% rownames(installed.packages()) == FALSE) {

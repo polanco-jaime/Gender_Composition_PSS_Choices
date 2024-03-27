@@ -55,6 +55,29 @@ outcomes = c('ECONOMICS_BUSINESS_RELATED' ,
              'AGRONOMY_VETERINARY_RELATED',
              'EDUCATION_SCIENCES',
              'HEALTH_SCIENCES',
-             'NO_STUDIES'
+             'NO_STUDIES', 
+             'MEDICINE', 'LAW'
 )
 
+
+ 
+table(data$MEDICINE)
+
+data <- data %>%
+  mutate(MEDICINE = ifelse(AREA_CONOCIMIENTO == 'MEDICINE' & grepl('MED', NOMBRE_PROGRAMA), 1, 0))
+
+data$AREA_CONOCIMIENTO = ifelse(data$MEDICINE == 1, 'MEDICINE', data$AREA_CONOCIMIENTO)
+
+# data$AREA_CONOCIMIENTO = ifelse( is.na(data$AREA_CONOCIMIENTO)==T, 'NO STUDIES', data$AREA_CONOCIMIENTO)
+
+data$HEALTH_SCIENCES = ifelse(data$MEDICINE == 1, 0, data$HEALTH_SCIENCES)
+
+# outcomes = c(outcomes, 'MEDICINE')
+# 
+data$year = data$YEAR_INFO
+# data <- data %>%
+#   mutate(LAW = ifelse(AREA_CONOCIMIENTO == 'LAW' & grepl('DERE', NOMBRE_PROGRAMA), 1, 0))
+# 
+# 
+# outcomes = c(outcomes, 'LAW')
+data$SOCIAL_SCIENCES_HUMANITIES = ifelse(data$LAW == 1, 0, data$SOCIAL_SCIENCES_HUMANITIES)

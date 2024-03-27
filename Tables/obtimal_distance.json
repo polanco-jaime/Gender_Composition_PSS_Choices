@@ -1,0 +1,101 @@
+[
+  {
+    "Average_BCE_mean": 0.1189,
+    "Standar_Desviation": 0.0117,
+    "Variance_BCE_mean": 0.0001,
+    "Confidence_Interval_Lower": 0.1155,
+    "Confidence_Interval_Upper": 0.1222,
+    "Optimal_Distance": 0.0998,
+    "outcome": "LAW"
+  },
+  {
+    "Average_BCE_mean": 0.1,
+    "Standar_Desviation": 0.0108,
+    "Variance_BCE_mean": 0.0001,
+    "Confidence_Interval_Lower": 0.0968,
+    "Confidence_Interval_Upper": 0.1033,
+    "Optimal_Distance": 0.1109,
+    "outcome": "MEDICINE"
+  },
+  {
+    "Average_BCE_mean": 0.7555,
+    "Standar_Desviation": 0.0062,
+    "Variance_BCE_mean": 0,
+    "Confidence_Interval_Lower": 0.7548,
+    "Confidence_Interval_Upper": 0.7561,
+    "Optimal_Distance": 0.0832,
+    "outcome": "NO_STUDIES"
+  },
+  {
+    "Average_BCE_mean": 0.1585,
+    "Standar_Desviation": 0.0309,
+    "Variance_BCE_mean": 0.001,
+    "Confidence_Interval_Lower": 0.1548,
+    "Confidence_Interval_Upper": 0.1622,
+    "Optimal_Distance": 0.1109,
+    "outcome": "HEALTH_SCIENCES"
+  },
+  {
+    "Average_BCE_mean": 0.1313,
+    "Standar_Desviation": 0.0184,
+    "Variance_BCE_mean": 0.0003,
+    "Confidence_Interval_Lower": 0.1291,
+    "Confidence_Interval_Upper": 0.1335,
+    "Optimal_Distance": 0.1109,
+    "outcome": "EDUCATION_SCIENCES"
+  },
+  {
+    "Average_BCE_mean": 0.1202,
+    "Standar_Desviation": 0.0117,
+    "Variance_BCE_mean": 0.0001,
+    "Confidence_Interval_Lower": 0.1188,
+    "Confidence_Interval_Upper": 0.1216,
+    "Optimal_Distance": 0.1109,
+    "outcome": "AGRONOMY_VETERINARY_RELATED"
+  },
+  {
+    "Average_BCE_mean": 0.2107,
+    "Standar_Desviation": 0.0262,
+    "Variance_BCE_mean": 0.0007,
+    "Confidence_Interval_Lower": 0.2076,
+    "Confidence_Interval_Upper": 0.2139,
+    "Optimal_Distance": 0.1109,
+    "outcome": "SOCIAL_SCIENCES_HUMANITIES"
+  },
+  {
+    "Average_BCE_mean": 0.0988,
+    "Standar_Desviation": 0.0036,
+    "Variance_BCE_mean": 0,
+    "Confidence_Interval_Lower": 0.0983,
+    "Confidence_Interval_Upper": 0.0992,
+    "Optimal_Distance": 0.1109,
+    "outcome": "MATHEMATICS_NATURAL_SCIENCES"
+  },
+  {
+    "Average_BCE_mean": 0.1041,
+    "Standar_Desviation": 0.0107,
+    "Variance_BCE_mean": 0.0001,
+    "Confidence_Interval_Lower": 0.1028,
+    "Confidence_Interval_Upper": 0.1054,
+    "Optimal_Distance": 0.1109,
+    "outcome": "FINE_ARTS"
+  },
+  {
+    "Average_BCE_mean": 0.4616,
+    "Standar_Desviation": 0.0884,
+    "Variance_BCE_mean": 0.0078,
+    "Confidence_Interval_Lower": 0.451,
+    "Confidence_Interval_Upper": 0.4722,
+    "Optimal_Distance": 0.1109,
+    "outcome": "ENG_ARCH_RELATED"
+  },
+  {
+    "Average_BCE_mean": 0.389,
+    "Standar_Desviation": 0.0538,
+    "Variance_BCE_mean": 0.0029,
+    "Confidence_Interval_Lower": 0.3834,
+    "Confidence_Interval_Upper": 0.3946,
+    "Optimal_Distance": 0.0832,
+    "outcome": "ECONOMICS_BUSINESS_RELATED"
+  }
+]
