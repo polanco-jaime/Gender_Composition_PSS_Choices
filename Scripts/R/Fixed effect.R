@@ -3,9 +3,11 @@
 ###############################################################################
 
 source("Scripts/R/genereal_settings.R", echo=TRUE)
-source("./Scripts/R/read_data.R", echo=TRUE)
 source("./Scripts/R/functions.R", echo=TRUE)
-outcomes = c('ECONOMICS_BUSINESS_RELATED' ,
+source("./Scripts/R/read_data.R", echo=TRUE)
+
+outcomes = c(
+             'ECONOMICS_BUSINESS_RELATED' ,
              'ENG_ARCH_RELATED',
              'FINE_ARTS',
              'MATHEMATICS_NATURAL_SCIENCES',
@@ -15,7 +17,9 @@ outcomes = c('ECONOMICS_BUSINESS_RELATED' ,
              'HEALTH_SCIENCES',
              'NO_STUDIES',
              'MEDICINE',
-             'LAW'
+             'LAW',
+             'STEM',
+             'NO_STEM'
 )
 gc()
 table(data$NO_STUDIES)
@@ -54,6 +58,7 @@ for (outcome in outcomes  ) {
   optimal_distance <- json_data[json_data$outcome == outcome,  "Optimal_Distance"]
   breakpoints <-seq(0.001, 0.999, by = optimal_distance)  
    
+  
   if (tail(breakpoints, 1) > 0.93) {
     print("The last value is greater than 0.93")
   }
@@ -61,6 +66,7 @@ for (outcome in outcomes  ) {
     breakpoints <- c( breakpoints, 0.999)
   }
   for (i in 1:(length(breakpoints) - 1)) {
+ 
     # Define the range for the current subsample
     range_start <- breakpoints[i]
     range_end <- breakpoints[i + 1]
@@ -68,9 +74,9 @@ for (outcome in outcomes  ) {
     gc()
     if (outcome != "NO_STUDIES" ) {
       subsample <- subset(subsample, subsample[["NO_STUDIES"]] != 1 )
-      
     }
-    formuala_ = paste0( ' (',outcome     , ') ~ ' ,  ' genero +EDAD+tot_students_school_group   | fe_group ' )
+  
+    formuala_ = paste0( ' (',outcome     , ') ~ ' ,  ' genero +EDAD+tot_students_school_group+frac_males_in_the_group   | fe_group ' )
     
     print( paste0('the current estimation is from: ',range_start , ', to: ',range_end ) )
     
@@ -118,7 +124,7 @@ for (career in unique(estimated_points$outcome) ) {
   glimpse(subsample)
   # Create a bar plot using ggplot2
   x_continuous = 'Breakpoint'
-  sd_error = 'estimated_point_std_error'
+          sd_error = 'estimated_point_std_error'
   estimate_point = 'Estimated_Point'
   TITULO = paste0('Odds Ratio of\n' , convert_outcome(career) )
   Plot =   plot_coefficients(subsample, estimate_point = estimate_point ,

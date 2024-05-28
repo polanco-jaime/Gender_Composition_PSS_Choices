@@ -56,7 +56,9 @@ outcomes = c('ECONOMICS_BUSINESS_RELATED' ,
              'EDUCATION_SCIENCES',
              'HEALTH_SCIENCES',
              'NO_STUDIES', 
-             'MEDICINE', 'LAW'
+             'MEDICINE',
+             'LAW',
+             'STEM', 'NO_STEM'
 )
 
 
@@ -81,3 +83,18 @@ data$year = data$YEAR_INFO
 # 
 # outcomes = c(outcomes, 'LAW')
 data$SOCIAL_SCIENCES_HUMANITIES = ifelse(data$LAW == 1, 0, data$SOCIAL_SCIENCES_HUMANITIES)
+
+
+# Eliminar tildes de la columna 'texto'
+data$NOMBRE_PROGRAMA <- chartr("áéíóúÁÉÍÓÚ", "aeiouAEIOU", data$NOMBRE_PROGRAMA)  
+data$STEM <- detectar_stem(data$NOMBRE_PROGRAMA)
+# data$STEM = ifelse(data$NO_STUDIES!=1 & (data$MATHEMATICS_NATURAL_SCIENCES == 1 | data$ENG_ARCH_RELATED == 1) , 1, 0 )
+
+data$NO_STEM = ifelse(data$NO_STUDIES!=1 & data$STEM != 1   , 1, 0 )
+  # ifelse(data$NO_STUDIES==0 &  data$ECONOMICS_BUSINESS_RELATED == 0 & data$ENG_ARCH_RELATED == 0 , 1, 0 ) 
+#  
+# unique(data$NOMBRE_PROGRAMA)
+# unique(data$LEVEL)
+# 
+# table(data$STEM)
+  

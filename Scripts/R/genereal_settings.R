@@ -26,7 +26,7 @@ setwd(General_path)
 
 
 source("Scripts/R/apis.R", echo=TRUE)
-
+library(progress)
 
 if (1==1) { 
   lista = c('readr','readxl','sqldf','plyr', 

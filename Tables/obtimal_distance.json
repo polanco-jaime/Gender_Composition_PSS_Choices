@@ -97,5 +97,23 @@
     "Confidence_Interval_Upper": 0.3946,
     "Optimal_Distance": 0.0832,
     "outcome": "ECONOMICS_BUSINESS_RELATED"
+  },
+  {
+    "Average_BCE_mean": 0.6402,
+    "Standar_Desviation": 0.0505,
+    "Variance_BCE_mean": 0.0026,
+    "Confidence_Interval_Lower": 0.6014,
+    "Confidence_Interval_Upper": 0.6791,
+    "Optimal_Distance": 0.1109,
+    "outcome": "NO_STEM"
+  },
+  {
+    "Average_BCE_mean": 0.4881,
+    "Standar_Desviation": 0.087,
+    "Variance_BCE_mean": 0.0076,
+    "Confidence_Interval_Lower": 0.4259,
+    "Confidence_Interval_Upper": 0.5504,
+    "Optimal_Distance": 0.0998,
+    "outcome": "STEM"
   }
 ]

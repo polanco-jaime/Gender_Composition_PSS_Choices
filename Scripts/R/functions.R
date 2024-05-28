@@ -1,4 +1,17 @@
 options(scipen=999)
+
+# Define your function
+
+detectar_stem <- function(career_name) {
+  ifelse(is.na(career_name) | nchar(career_name) <= 1, NA,
+         ifelse(str_detect(tolower(career_name), 
+                           "(?i)ingenieria|engineering|computaciona|biologia|computer|matematicas|fisica|quimica|biologia|informatica|electronica|telematica|mecatronica|ciencias|tecnologia|arquitectura|oceanografia|astronomia|ambiental|forestal|minas|metalurgia|geologia|matematica|estadistica|logistica|sistemas"), 
+                1, 0))
+}
+
+
+  
+  
 table_save = function(result,caption, file_name ) {
   position_start = str_locate(result, "begin\\{tabular\\}")
   position_start  = as.data.frame(subset(is.na(position_start)   ))
@@ -246,7 +259,9 @@ convert_outcome <- function(outcome) {
     'Health Sciences (except medicine)',
     'No Studies',
     'Law',
-    'Medicine'
+    'Medicine',
+    'STEM',
+    'No STEM'
   )
   outcomes <- c(
     'ECONOMICS_BUSINESS_RELATED',
@@ -259,7 +274,9 @@ convert_outcome <- function(outcome) {
     'HEALTH_SCIENCES',
     'NO_STUDIES',
     'LAW',
-    'MEDICINE'
+    'MEDICINE',
+    'STEM',
+    'NO_STEM'
   )
   
   if (outcome %in% outcomes) {
@@ -341,6 +358,7 @@ calculate_bootstrap_summary <- function(data, outcome, covariates, group_var, st
       
       formula <- paste0("(", outcome, ") ~ ", paste(covariates, collapse = "+"), 
                         " | ", group_var)
+      tryCatch({
       model <- fixest::feglm(data = subsample, family = 'binomial', as.formula(formula))
       gc()
       predicted_probs <- predict(model, type = "response")
@@ -353,12 +371,16 @@ calculate_bootstrap_summary <- function(data, outcome, covariates, group_var, st
                            mean_bce = mean_bce)
       
       bootstrap_results <- rbind(bootstrap_results, result)
+      }, error = function(e) {
+        cat("Error occurred in iteration", i, ": ", conditionMessage(e), "\n")
+      })
+    }
       
     }
-  }
-  
+ 
+  bootstrap_results = na.omit(bootstrap_results)
   variance <- var(bootstrap_results$mean_bce)
-  mean_ <- mean(bootstrap_results$mean_bce)
+  mean_ <- mean(bootstrap_results$mean_bce )
   confidence_interval <- t.test(bootstrap_results$mean_bce)$conf.int
   stability <- sd(bootstrap_results$mean_bce)
   

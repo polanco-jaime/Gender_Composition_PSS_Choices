@@ -1,17 +1,22 @@
+
 source("Scripts/R/genereal_settings.R", echo=TRUE)
-source("./Scripts/R/read_data.R", echo=TRUE)
 source("./Scripts/R/functions.R", echo=TRUE)
-outcomes = c('ECONOMICS_BUSINESS_RELATED' ,
-             'ENG_ARCH_RELATED',
-             'FINE_ARTS',
-             'MATHEMATICS_NATURAL_SCIENCES',
-             'SOCIAL_SCIENCES_HUMANITIES',
-             'AGRONOMY_VETERINARY_RELATED',
-             'EDUCATION_SCIENCES',
-             'HEALTH_SCIENCES',
-             'NO_STUDIES',
-             'MEDICINE',
-             'LAW'
+source("./Scripts/R/read_data.R", echo=TRUE)
+
+outcomes = c(
+  'ECONOMICS_BUSINESS_RELATED' ,
+  'ENG_ARCH_RELATED',
+  'FINE_ARTS',
+  'MATHEMATICS_NATURAL_SCIENCES',
+  'SOCIAL_SCIENCES_HUMANITIES',
+  'AGRONOMY_VETERINARY_RELATED',
+  'EDUCATION_SCIENCES',
+  'HEALTH_SCIENCES',
+  'NO_STUDIES',
+  'MEDICINE',
+  'LAW' ,
+  'STEM',
+  'NO_STEM'
 )
 gc()
 # data = sqldf::sqldf("SELECT * ,
@@ -30,30 +35,36 @@ data_panel_by_school  = sqldf::sqldf("
                            SELECT  
                             codigo_dane_sede, 
                             YEAR_INFO year,
-                           fe_group fe_group ,TREATMENT_TIME,SCHOOL_STATUS,
-                           AVG(tot_students_school_group) tot_students_school_group,
-                           AVG(frac_males_in_the_group) frac_males_in_the_group,
-                           SUM( CASE WHEN genero = 'M' THEN 1 ELSE 0 END) MALES,
-                           SUM( CASE WHEN genero = 'F' THEN 1 ELSE 0 END) FEMALES,
-                           sum(ECONOMICS_BUSINESS_RELATED) ECONOMICS_BUSINESS_RELATED, 
+                           fe_group fe_group ,
+                           TREATMENT_TIME,
+                           SCHOOL_STATUS,
+                           grupo,
                            
-                           sum(ECONOMICS_BUSINESS_RELATED) ECONOMICS_BUSINESS_RELATED, 
+                            AVG(tot_students_school_group) tot_students_school_group,
+                            AVG(frac_males_in_the_group) frac_males_in_the_group,
+                            SUM( CASE WHEN genero = 'M' THEN 1 ELSE 0 END) MALES,
+                            SUM( CASE WHEN genero = 'F' THEN 1 ELSE 0 END) FEMALES,
+                            sum(ECONOMICS_BUSINESS_RELATED) ECONOMICS_BUSINESS_RELATED, 
+                           
+                            sum(ECONOMICS_BUSINESS_RELATED) ECONOMICS_BUSINESS_RELATED, 
                             sum(ENG_ARCH_RELATED) ENG_ARCH_RELATED, 
-                             sum(FINE_ARTS) FINE_ARTS, 
-                              sum(MATHEMATICS_NATURAL_SCIENCES) MATHEMATICS_NATURAL_SCIENCES, 
-                               sum(SOCIAL_SCIENCES_HUMANITIES) SOCIAL_SCIENCES_HUMANITIES, 
-                                sum(AGRONOMY_VETERINARY_RELATED) AGRONOMY_VETERINARY_RELATED, 
-                                 sum(EDUCATION_SCIENCES) EDUCATION_SCIENCES, 
-                                  sum(HEALTH_SCIENCES) HEALTH_SCIENCES, 
-                                    sum(NO_STUDIES) NO_STUDIES, 
-                                    sum(MEDICINE) MEDICINE, 
-                                    sum(LAW) LAW, 
+                            sum(FINE_ARTS) FINE_ARTS, 
+                            sum(MATHEMATICS_NATURAL_SCIENCES) MATHEMATICS_NATURAL_SCIENCES, 
+                            sum(SOCIAL_SCIENCES_HUMANITIES) SOCIAL_SCIENCES_HUMANITIES, 
+                            sum(AGRONOMY_VETERINARY_RELATED) AGRONOMY_VETERINARY_RELATED, 
+                            sum(EDUCATION_SCIENCES) EDUCATION_SCIENCES, 
+                            sum(HEALTH_SCIENCES) HEALTH_SCIENCES, 
+                            sum(NO_STUDIES) NO_STUDIES, 
+                            sum(MEDICINE) MEDICINE, 
+                            sum(LAW) LAW, 
+                            sum(STEM) STEM, 
+                            sum(NO_STEM) NO_STEM, 
                                  
                            avg(EDAD) age
                             
                            FROM data
                             
-                           GROUP BY 1,2,3,4,5 
+                           GROUP BY 1,2,3,4,5 ,6
                            ")
 
 
@@ -77,6 +88,8 @@ data_panel_by_school$frac_HEALTH_SCIENCES = data_panel_by_school$HEALTH_SCIENCES
 data_panel_by_school$frac_NO_STUDIES = data_panel_by_school$NO_STUDIES / data_panel_by_school$tot_students_school_group
 data_panel_by_school$frac_MEDICINE = data_panel_by_school$MEDICINE / data_panel_by_school$tot_students_school_group
 data_panel_by_school$frac_LAW = data_panel_by_school$LAW / data_panel_by_school$tot_students_school_group
+data_panel_by_school$frac_STEM = data_panel_by_school$STEM / data_panel_by_school$tot_students_school_group
+data_panel_by_school$frac_NO_STEM = data_panel_by_school$NO_STEM / data_panel_by_school$tot_students_school_group
 
 data_panel_by_school = subset(data_panel_by_school, data_panel_by_school$tot_students_school_group >= 4)
 gc()
@@ -89,17 +102,19 @@ gc()
 #              ")
 colnames(data_panel_by_school)
 # data_panel_by_school$year
-modelo = feols(frac_ECONOMICS_BUSINESS_RELATED ~ frac_males +age+ tot_students_school_group+
-                 sunab(TREATMENT_TIME, year #, ref.p = c(.F + 0:2, -1)
+modelo = feols(frac_ECONOMICS_BUSINESS_RELATED ~ frac_males + 
+                 sunab(TREATMENT_TIME, year , ref.p = c(.F + .L, -1)
                        ) |
-                 codigo_dane_sede + year, 
+                 codigo_dane_sede+grupo + year, 
                subset(data_panel_by_school,data_panel_by_school$SCHOOL_STATUS=='FEMALE') 
                )
-
+# modelo = lm(data=subset(data_panel_by_school, data_panel_by_school$frac_ECONOMICS_BUSINESS_RELATED!=0 & data_panel_by_school$frac_males!=0),
+            # log(frac_ECONOMICS_BUSINESS_RELATED) ~ log(frac_males))
+summary(modelo)
 # modelo = fixest::feols(data = data_panel_by_school, frac_ECONOMICS_BUSINESS_RELATED ~ frac_females | fe_group )
 etable(modelo)
 summary(modelo)
-fixest::coefplot(modelo)
+# fixest::coefplot(modelo)
 fixest::iplot(modelo)
 ####################################################################################
 # Ex single FEMALE schools to coeducationl
@@ -118,7 +133,7 @@ for (outcome in outcomes  ) {
       
     }
     formuala_ = paste0( 'frac_' , outcome  , ' ~ ' ,  ' frac_males +age+tot_students_school_group+grupo   ', "+
-                 sunab(TREATMENT_TIME, year, ref.p = -1 ) |
+                 sunab(TREATMENT_TIME, year, ref.p = -1  ) |
                  codigo_dane_sede+  year
                         " )   
  
