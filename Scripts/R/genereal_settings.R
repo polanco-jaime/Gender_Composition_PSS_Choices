@@ -1,15 +1,10 @@
 ########################################
-if (Sys.info()["nodename"] == "CLOUD37") {
-  General_path = "C:/Users/USER/Desktop/01-with-the-boys/"
+if (Sys.info()["nodename"] == "51259") {
+  General_path = "~/Documents/Other_Projects/Gender_Composition_PSS_Choices"
   data_dir <- paste0(General_path , "Data/")
-  graphs_dir <-  paste0(General_path , "Graph/") 
-  tables_dir <- paste0(General_path , "Tables/")  
-}  else if (Sys.info()["nodename"] == "JAIME") {
-  General_path = "C:/Users/USER/Desktop/01-with-the-boys/"
-  data_dir <- paste0(General_path , "Data/")
-  graphs_dir <-  paste0(General_path , "Graph/") 
-  tables_dir <- paste0(General_path , "Tables/")  
-} else if (Sys.info()["nodename"] ==  "Jaimes-MacBook-Pro.local" ){
+  graphs_dir <-  paste0(General_path , "Gender-Composition-in-Classrooms/Graph/") 
+  tables_dir <- paste0(General_path , "Gender-Composition-in-Classrooms/Tables/")  
+}  else if (Sys.info()["nodename"] ==  "Jaimes-MacBook-Pro.local" ){
   General_path = "~/Library/CloudStorage/OneDrive-PontificiaUniversidadJaveriana/01_research/third_paper_phd/" 
   data_dir <- paste0(General_path , "Data/")
   graphs_dir <-  paste0(General_path , "Graph/") 
@@ -30,10 +25,10 @@ library(progress)
 
 if (1==1) { 
   lista = c('readr','readxl','sqldf','plyr', 
-            'did' , 'arrow',  'plyr', 'ggplot2',
+             'arrow',  'plyr', 'ggplot2',
             'dplyr','fixest' , 'gargle' , 'stringr'
             , 'bigrquery' , 'scales', 'fixest' , "margins", "jsonlite" , 
-            "xtable"
+            "xtable" #'did' ,
   )
   for (i in 1:length(lista) ) {
     if(lista[i] %in% rownames(installed.packages()) == FALSE) {
