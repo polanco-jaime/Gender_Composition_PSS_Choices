@@ -4,10 +4,15 @@ if (Sys.info()["nodename"] == "51259") {
   data_dir <- paste0(General_path , "Data/")
   graphs_dir <-  paste0(General_path , "Gender-Composition-in-Classrooms/Graph/") 
   tables_dir <- paste0(General_path , "Gender-Composition-in-Classrooms/Tables/")  
-}  else if (Sys.info()["nodename"] ==  "Jaimes-MacBook-Pro.local" ){
-  General_path = "~/Library/CloudStorage/OneDrive-PontificiaUniversidadJaveriana/01_research/third_paper_phd/" 
+}  else if (Sys.info()["nodename"] ==  "Jaimes-MBP" ){
+  General_path = "/Users/jaimepolanco-jimenez/Library/CloudStorage/OneDrive-PontificiaUniversidadJaveriana/01_research/third_paper_phd"
   data_dir <- paste0(General_path , "Data/")
-  graphs_dir <-  paste0(General_path , "Graph/") 
+  graphs_dir <-  paste0(General_path , "/Graph/") 
+  tables_dir <- paste0(General_path , "Tables/")   
+} else if (Sys.info()["nodename"] ==  "Jaimes-MacBook-Pro.local" ){
+  General_path = "/Users/jaimepolanco-jimenez/Library/CloudStorage/OneDrive-PontificiaUniversidadJaveriana/01_research/third_paper_phd"
+  data_dir <- paste0(General_path , "Data/")
+  graphs_dir <-  paste0(General_path , "/Graph/") 
   tables_dir <- paste0(General_path , "Tables/")   
 }
 
@@ -25,7 +30,7 @@ library(progress)
 
 if (1==1) { 
   lista = c('readr','readxl','sqldf','plyr', 
-             'arrow',  'plyr', 'ggplot2',
+             'arrow',  'plyr', 'ggplot2','did',
             'dplyr','fixest' , 'gargle' , 'stringr'
             , 'bigrquery' , 'scales', 'fixest' , "margins", "jsonlite" , 
             "xtable" #'did' ,
@@ -40,4 +45,5 @@ if (1==1) {
   rm(lista)
   rm(i)
 }
+source("Scripts/R/functions.R", echo=TRUE)
 

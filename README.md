@@ -3,16 +3,15 @@
 This repository contains the code and data associated with the paper titled "Gender Composition in Classrooms: Influences on Post-Secondary Schooling Choices." The paper investigates the relationship between the gender composition of classrooms and female students' university major choices in Colombia.
 
 ## Contents
-
-* **./With_the_Boys__How__Girls__STEM_Interest.pdf:**  The PDF version of the research paper.
+Gender_Composition_in_Classrooms.pdf
+* **./Papers/Gender_Composition_in_Classrooms.pdf:**  The PDF version of the research paper.
 * **./Tables:** Directory containing LaTeX files for tables presented in the paper.
 * **./Literature:** Directory containing relevant research articles and reports cited in the paper.
 * **./Graph:** Directory containing graphs and figures used in the paper.
 * **./Scripts:** Directory containing R scripts used for data cleaning, analysis, and visualization.
     * **./Scripts/R:** Subdirectory containing R scripts.
-    * **./Scripts/SQL:** Subdirectory containing SQL scripts for data extraction.
-* **./Data:** Directory containing processed data files used in the analysis (Note: The raw data is not publicly available).
-* **./obtimal_distance.json:** JSON file with optimal distance calculations.
+ 
+ 
 
 ## Data Access
 
