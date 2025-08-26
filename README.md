@@ -2,16 +2,25 @@
 
 This repository contains the code and data associated with the paper titled "Gender Composition in Classrooms: Influences on Post-Secondary Schooling Choices." The paper investigates the relationship between the gender composition of classrooms and female students' university major choices in Colombia.
 
+## Paper
+
+- :file_folder: __Files__:
+     + [Working paper](Docs/Gender_Composition_in_Classrooms.pdf)
+
+- :file_folder: __Files__:
+     + [Slides - 20 min](Docs/Presentation_20min.pdf)
 ## Contents
-Gender_Composition_in_Classrooms.pdf
-* **./Papers/Gender_Composition_in_Classrooms.pdf:**  The PDF version of the research paper.
+
+* **./Docs/Gender_Composition_in_Classrooms.pdf:** The PDF version of the research paper.
 * **./Tables:** Directory containing LaTeX files for tables presented in the paper.
 * **./Literature:** Directory containing relevant research articles and reports cited in the paper.
 * **./Graph:** Directory containing graphs and figures used in the paper.
 * **./Scripts:** Directory containing R scripts used for data cleaning, analysis, and visualization.
     * **./Scripts/R:** Subdirectory containing R scripts.
- 
- 
+    * **./Scripts/SQL:** Subdirectory containing SQL scripts for data extraction.
+* **./Data:** Directory containing processed data files used in the analysis (Note: The raw data is not publicly available).
+* **./obtimal_distance.json:** JSON file with optimal distance calculations.
+
 
 ## Data Access
 
@@ -40,15 +49,7 @@ If you use this code or data in your own research, please cite the following pap
 ```latex
 @article{polancojimenez2023gender,
   title={Gender Composition in Classrooms: Influences on Post-Secondary Schooling Choices},
-  author={Polanco-Jim{\'e}nez, Jaime and De Witte, Kristof and Bernal, Gloria L},
+  author={Polanco-Jiménez, Jaime and De Witte, Kristof and Bernal, Gloria L},
   journal={Unpublished Manuscript},
   year={2024}
 }
-```
-
-## Contact
-
-For any questions or inquiries, please contact the corresponding author:
-
-Jaime Polanco-Jiménez
-Email: jaime.polanco@javeriana.edu.co 

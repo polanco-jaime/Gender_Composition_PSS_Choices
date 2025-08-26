@@ -6,3 +6,22 @@
 *.PARQUET
 *.Rproj
 apis.R
+# macOS
+.DS_Store
+
+# R temporary files
+.RData
+.Rhistory
+*.RData
+.RDataTmp
+.RDataTmp1
+
+# macOS
+*.DS_Store
+
+# R temporary files
+*.RData
+*.Rhistory
+*.RData
+*.RDataTmp
+*.RDataTmp1
